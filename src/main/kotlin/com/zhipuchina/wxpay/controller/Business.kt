@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 
 /**
  * 业务接口 只对应各个业务服务端 由业务服务端发起
- * @author 任家立
+ * @author  markrenChina
  */
 @RestController
 class Business {

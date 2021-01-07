@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 /**
  * api接口配置
- * @author 任家立
+ * @author  markrenChina
  */
 interface ApiConfig {
 

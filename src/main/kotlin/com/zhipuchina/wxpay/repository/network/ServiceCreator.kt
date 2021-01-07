@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * retrofit service 动态代理对象获取封装
- * @author 任家立
+ * @author  markrenChina
  */
 object ServiceCreator {
 

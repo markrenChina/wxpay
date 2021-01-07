@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 /**
  * 微信支付回调接口
- * @author 任家立
+ * @author  markrenChina
  */
 class WeChatNotify {
 
@@ -23,7 +23,7 @@ class WeChatNotify {
      * produces 返回xml
      */
     @GetMapping(value = ["Demo"],consumes = [APPLICATION_XML_VALUE],produces = [APPLICATION_XML_VALUE])
-    fun health(@RequestBody testModel: TestModel): TestModel {
+    fun demo(@RequestBody testModel: TestModel): TestModel {
         println("成功")
         println(testModel.name)
         return TestModel("123",98)
