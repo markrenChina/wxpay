@@ -1,10 +1,8 @@
 package com.zhipuchina.wxpay.repository.network
 
-import com.cpnir.eightport.http.util.HttpHelper
-import com.zhipuchina.wxpay.WECAHT_HTTP_BASE_URL
+import com.zhipuchina.wxpay.utils.WECAHT_HTTP_BASE_URL
 import okhttp3.*
 import okio.Buffer
-import okio.BufferedSink
 import org.slf4j.LoggerFactory
 import retrofit2.Retrofit
 import retrofit2.converter.jaxb.JaxbConverterFactory
@@ -21,8 +19,9 @@ object ServiceCreator {
 
     private val retrofit = Retrofit.Builder()
         .client(getOkHttpClient())
-        //.baseUrl(WECAHT_HTTP_BASE_URL)
-        .baseUrl("http://localhost:8080")
+        .baseUrl(WECAHT_HTTP_BASE_URL)
+        //.baseUrl("http://localhost:8080")
+        //.addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(JaxbConverterFactory.create())
         .build()
 
@@ -43,15 +42,19 @@ object ServiceCreator {
     }
 
     private fun getInterceptor(): Interceptor? {
-        return Interceptor { chain: Interceptor.Chain ->
+        return Interceptor{ chain: Interceptor.Chain ->
+            /**
+             * 拦截发送
+             */
             val request  = chain.request()
-                .newBuilder()
-                //.removeHeader("Accept-Encoding")
-                .build()
             val sb = StringBuilder()
             val bs = Buffer()
             request.body()?.writeTo(bs)
-            logger.debug("request = ${bs.readUtf8()}")
+            val bRequestStr = bs.readUtf8()
+            logger.debug("request before change = $bRequestStr")
+            //val aRequestStr = bRequestStr.replace(">\"",">").replace("\"<","<")
+            //logger.debug("request after change = $aRequestStr")
+            //val requestBody = MultipartBody.create(request.body()?.contentType(),aRequestStr)
             if (request.body() is FormBody) {
                 val body = request.body() as FormBody
                 var i = 0
@@ -82,9 +85,7 @@ object ServiceCreator {
                 )
                 logger.debug("debug 2 = ${HttpHelper.uniCodeToCN(msg)}")
             }
-            /**
-             * 拦截发送
-             */
+
             if ("POST" == request.method()){
                 if (request.body() is FormBody){
                     val bodyBuilder = StringBuilder()
@@ -101,7 +102,10 @@ object ServiceCreator {
                     logger.debug( "debug 3 = $bodyBuilder")
                 }
             }
-            val response = chain.proceed(request)
+            val response = chain.proceed(
+                request.newBuilder()
+                    //.post(requestBody)
+                    .build())
             if (response.body() == null) {
                 logger.error("okhttp interceptor response is empty")
                 return@Interceptor response

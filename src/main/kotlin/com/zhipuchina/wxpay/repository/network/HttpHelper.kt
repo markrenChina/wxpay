@@ -1,4 +1,4 @@
-package com.cpnir.eightport.http.util
+package com.zhipuchina.wxpay.repository.network
 
 object HttpHelper {
     /**

@@ -1,7 +1,12 @@
 package com.zhipuchina.wxpay.controller
 
+import com.zhipuchina.wxpay.repository.network.model.ResultVo
+import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
+import com.zhipuchina.wxpay.service.IWeChatPay
 import kotlinx.coroutines.coroutineScope
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -9,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController
  * @author  markrenChina
  */
 @RestController
-class Business {
+class Business constructor(
+    @Autowired val weChatPayService: IWeChatPay
+) {
 
     /**
      * 统一下单
@@ -18,8 +25,8 @@ class Business {
      * @doc https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1
      */
     @PostMapping("unifiedorder")
-    suspend fun unifiedOrder() = coroutineScope{
-
+    suspend fun unifiedOrder(@RequestBody unifiedOrder: UnifiedOrder):ResultVo<String> = coroutineScope{
+        ResultVo(weChatPayService.unifiedOrder(unifiedOrder))
     }
 
     /**

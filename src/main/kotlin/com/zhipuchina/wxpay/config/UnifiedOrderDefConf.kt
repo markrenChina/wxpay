@@ -1,6 +1,6 @@
 package com.zhipuchina.wxpay.config
 
-import com.zhipuchina.wxpay.repository.network.model.SceneInfo
+import com.zhipuchina.wxpay.repository.network.model.wxrequest.SceneInfo
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 
@@ -23,21 +23,10 @@ object UnifiedOrderDefConf{
      */
     var deviceInfo: String?= null
     /**
-     * 随机字符串，String(32)
-     * 推荐随机数生成算法 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
-     */
-    var nonceStr: String = ""
-    /**
-     * 签名 String(64)
-     * 通过签名算法计算得出的签名值，详见
-     * 签名生成算法 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
-     */
-    var sign: String = ""
-    /**
      * 签名类型 String(32)
      * 签名类型，默认为MD5，支持HMAC-SHA256和MD5。
      */
-    var signType: String?= null
+    var signType: String?= "MD5"
     /**
      * 商品描述 String(128)
      * 商品简单描述，该字段请按照规范传递，具体请见
@@ -113,7 +102,7 @@ object UnifiedOrderDefConf{
      * MICROPAY--付款码支付，付款码支付有单独的支付接口，所以接口不需要上传，该字段在对账单中会出现
      * 小程序取值如下：JSAPI，详细说明见
      */
-    var tradeType: String = "JSAPI"
+    var tradeType: String = ""
     /**
      * 商品ID String(32)
      * trade_type=NATIVE时，此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
@@ -149,4 +138,8 @@ object UnifiedOrderDefConf{
      * ，字段详细说明请点击行前的+展开
      */
     var sceneInfo: SceneInfo?= null
+    /**
+     * 商户ApiKey
+     */
+    var apiKey: String = ""
 }
