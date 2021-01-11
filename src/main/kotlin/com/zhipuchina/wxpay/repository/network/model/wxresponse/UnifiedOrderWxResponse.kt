@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement
  */
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-class UnifiedOrderResponse {
+class UnifiedOrderWxResponse {
     /**
      * 返回状态码
      * SUCCESS/FAIL

@@ -2,10 +2,8 @@ package com.zhipuchina.wxpay.repository
 
 import com.zhipuchina.wxpay.repository.network.ApiConfig
 import com.zhipuchina.wxpay.repository.network.ServiceCreator
-import com.zhipuchina.wxpay.repository.network.model.TestModel
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
-import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderResponse
-import org.springframework.beans.factory.annotation.Autowired
+import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxResponse
 import org.springframework.stereotype.Repository
 
 /**
@@ -19,6 +17,6 @@ class Repository: IRepository {
 
     private val netService = ServiceCreator.create<ApiConfig>()
 
-    override suspend fun unifiedOrder(unifiedOrder: UnifiedOrder): UnifiedOrderResponse
+    override suspend fun unifiedOrder(unifiedOrder: UnifiedOrder): UnifiedOrderWxResponse
     = netService.unifiedOrder(unifiedOrder)
 }

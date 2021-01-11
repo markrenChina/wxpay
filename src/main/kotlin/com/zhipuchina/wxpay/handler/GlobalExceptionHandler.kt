@@ -36,8 +36,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ParamException::class)
     @ResponseBody
     fun handler(e: ParamException): ResultVo<String> {
-        logger.error("参数异常:{}", e.localizedMessage)
-        return ResultVo(null,400, e.localizedMessage, )
+        logger.error("参数异常:{}", e.message)
+        return ResultVo(null,400, e.message)
     }
 
 }

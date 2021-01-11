@@ -1,5 +1,6 @@
 package com.zhipuchina.wxpay.service
 
+import com.zhipuchina.wxpay.repository.network.model.bsresponse.UnifiedOrderBsResponse
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 
 /**
@@ -11,5 +12,5 @@ interface IWeChatPay {
     /**
      * 验证业务请求，发送统一下单指令,返回支付参数并签名
      */
-    suspend fun unifiedOrder(unifiedOrder: UnifiedOrder): String
+    suspend fun unifiedOrder(unifiedOrder: UnifiedOrder): UnifiedOrderBsResponse
 }

@@ -1,10 +1,8 @@
 package com.zhipuchina.wxpay.repository.network
 
-import com.zhipuchina.wxpay.repository.network.model.TestModel
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
-import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderResponse
+import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxResponse
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
@@ -23,5 +21,5 @@ interface ApiConfig {
     suspend fun testPost(@Body testModel: UnifiedOrder): TestModel*/
 
     @POST("unifiedorder")
-    suspend fun unifiedOrder(@Body unifiedOrder: UnifiedOrder): UnifiedOrderResponse
+    suspend fun unifiedOrder(@Body unifiedOrder: UnifiedOrder): UnifiedOrderWxResponse
 }

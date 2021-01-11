@@ -1,9 +1,9 @@
 package com.zhipuchina.wxpay.repository.network.model.wxresponse
 
-enum class UnifiedOrderResErrCode(
-    val describe: String,
-    val reason: String,
-    val solution: String
+enum class UnifiedOrderWxResErrCode(
+    private val describe: String,
+    private val reason: String,
+    private val solution: String
 ) {
     INVALID_REQUEST("参数错误","参数格式有误或者未按规则上传","订单重入时，要求参数值与原请求一致，请确认参数问题"),
     NOAUTH("商户无此接口权限","商户无此接口权限","请商户前往申请此接口权限"),
@@ -20,7 +20,11 @@ enum class UnifiedOrderResErrCode(
     XML_FORMAT_ERROR("XML格式错误","XML格式错误","请检查XML参数格式是否正确"),
     REQUIRE_POST_METHOD("请使用post方法","未使用post传递参数","请检查请求参数是否通过post方法提交"),
     POST_DATA_EMPTY("post数据为空","post数据不能为空","请检查post数据是否为空"),
-    NOT_UTF8("编码格式错误","未使用指定编码格式","请使用UTF-8编码格式")
+    NOT_UTF8("编码格式错误","未使用指定编码格式","请使用UTF-8编码格式");
+
+    override fun toString(): String {
+        return "错误(描述='$describe', 原因='$reason', 解决办法='$solution')"
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.zhipuchina.wxpay.controller
 
 import com.zhipuchina.wxpay.repository.network.model.ResultVo
+import com.zhipuchina.wxpay.repository.network.model.bsresponse.UnifiedOrderBsResponse
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.service.IWeChatPay
 import kotlinx.coroutines.coroutineScope
@@ -25,7 +26,7 @@ class Business constructor(
      * @doc https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1
      */
     @PostMapping("unifiedorder")
-    suspend fun unifiedOrder(@RequestBody unifiedOrder: UnifiedOrder):ResultVo<String> = coroutineScope{
+    suspend fun unifiedOrder(@RequestBody unifiedOrder: UnifiedOrder):ResultVo<UnifiedOrderBsResponse> = coroutineScope{
         ResultVo(weChatPayService.unifiedOrder(unifiedOrder))
     }
 

@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
  */
 class ResultVo<T>(
     var data:T? = null,
-    var status: Int = ResultEnums.SUCCESS.code,
-    var msg:String = ""
+    var status: Int = ResultEnums.OK.code,
+    var msg:String = ResultEnums.lookup(status)?.msg ?: ""
 ) {
     override fun toString(): String {
         return ObjectMapper().writeValueAsString(this)
