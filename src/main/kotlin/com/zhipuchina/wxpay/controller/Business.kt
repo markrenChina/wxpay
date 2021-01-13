@@ -1,14 +1,22 @@
 package com.zhipuchina.wxpay.controller
 
 import com.zhipuchina.wxpay.repository.network.model.ResultVo
-import com.zhipuchina.wxpay.repository.network.model.bsresponse.UnifiedOrderBsResponse
+import com.zhipuchina.wxpay.repository.network.model.TestModel
+import com.zhipuchina.wxpay.repository.network.model.bsrequest.UnifiedOrderBsResponse
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.service.IWeChatPay
 import kotlinx.coroutines.coroutineScope
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 
 /**
  * 业务接口 只对应各个业务服务端 由业务服务端发起
@@ -30,6 +38,25 @@ class Business constructor(
         ResultVo(weChatPayService.unifiedOrder(unifiedOrder))
     }
 
+    /*
+     * webClient
+     */
+    @MessageMapping("wc-unifiedorder")
+    suspend fun wcUnifiedOrder(unifiedOrder: UnifiedOrder) = coroutineScope {
+        Flux.just(ResultVo(weChatPayService.unifiedOrder(unifiedOrder)))
+    }
+
+    @PreAuthorize("hasRole('user')")
+    @MessageMapping("rs-unifiedorder")
+    suspend fun rsUnifiedOrder(unifiedOrder: UnifiedOrder,@AuthenticationPrincipal user: UserDetails) = coroutineScope {
+        user.authorities
+        Flux.just(ResultVo(weChatPayService.unifiedOrder(unifiedOrder)))
+    }
+
+    @MessageMapping("rs-test")
+    suspend fun testRsocket(testModel: TestModel) = coroutineScope {
+        ResponseEntity<TestModel>(TestModel("test rsocke",777), HttpStatus.OK)
+    }
     /**
      * 二次调用支付
      * 待确定

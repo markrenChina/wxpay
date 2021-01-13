@@ -1,4 +1,4 @@
-package com.zhipuchina.wxpay.repository.network.model.bsresponse
+package com.zhipuchina.wxpay.repository.network.model.bsrequest
 
 import com.zhipuchina.wxpay.config.UnifiedOrderDefConf
 import com.zhipuchina.wxpay.utils.SignUtils.encodeHMACSHA256
@@ -7,6 +7,7 @@ import java.util.*
 
 /**
  * 统一下单返回业务端（暂时对接的是小程序，Json）
+ * @author markrenChina
  */
 data class UnifiedOrderBsResponse(
     /**

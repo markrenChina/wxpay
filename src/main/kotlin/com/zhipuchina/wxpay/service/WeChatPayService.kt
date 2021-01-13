@@ -3,11 +3,10 @@ package com.zhipuchina.wxpay.service
 import com.zhipuchina.wxpay.config.UnifiedOrderDefConf
 import com.zhipuchina.wxpay.handler.ParamException
 import com.zhipuchina.wxpay.repository.IRepository
-import com.zhipuchina.wxpay.repository.network.model.bsresponse.UnifiedOrderBsResponse
+import com.zhipuchina.wxpay.repository.network.model.bsrequest.UnifiedOrderBsResponse
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxResErrCode
 import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxResponse
-import com.zhipuchina.wxpay.utils.SignUtils
 import com.zhipuchina.wxpay.utils.SignUtils.encodeHMACSHA256
 import com.zhipuchina.wxpay.utils.SignUtils.encodeMD5
 import org.slf4j.LoggerFactory
@@ -40,7 +39,11 @@ class WeChatPayService constructor(
             //todo request对象合法性验证（可以使用自定义注解）
             /**
              * 时间格式和值验证，ip地址格式验证，分账和发票值验证，商户订单号合法性,sign值去除
+             * src 传入的notifyUrl 为业务回调uri 需要保存修为
              */
+            if (field.name == "notifyUrl"){
+                //todo 记录值 替换默认notifyUrl 并在微信回调时回调业务传入的notifyUrl
+            }
             field.get(src)?.let {
                 field.set(unifiedOrder,it)
                 if ( (it is String && it.trim().isNotEmpty())|| it is Int) {

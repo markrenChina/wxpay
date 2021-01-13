@@ -1,11 +1,11 @@
 package com.zhipuchina.wxpay.controller
 
 import com.zhipuchina.wxpay.repository.network.model.TestModel
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_XML_VALUE
-import org.springframework.stereotype.Controller
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -22,14 +22,16 @@ class WeChatNotify {
      * consumes 消费xml
      * produces 返回xml
      */
-    @GetMapping(value = ["Demo"],consumes = [APPLICATION_XML_VALUE],produces = [APPLICATION_XML_VALUE])
-    fun demo(@RequestBody testModel: TestModel): TestModel {
+    @GetMapping(value = ["demo"],consumes = [APPLICATION_XML_VALUE],produces = [APPLICATION_XML_VALUE])
+    fun demo(@RequestBody testModel: TestModel): ResponseEntity<TestModel> {
         println("成功")
         println(testModel.name)
-        return TestModel("123",98)
+        return ResponseEntity<TestModel>(TestModel("test rsocke",777), HttpStatus.OK)
     }
 
 
+    @GetMapping("test")
+    fun test()="test"
 
     /**
      * 退款结果通知

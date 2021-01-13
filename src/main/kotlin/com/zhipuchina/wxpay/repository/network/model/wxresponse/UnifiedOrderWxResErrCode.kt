@@ -1,5 +1,9 @@
 package com.zhipuchina.wxpay.repository.network.model.wxresponse
 
+/**
+ * 统一下单错误描述枚举
+ * @author markrenChina
+ */
 enum class UnifiedOrderWxResErrCode(
     private val describe: String,
     private val reason: String,

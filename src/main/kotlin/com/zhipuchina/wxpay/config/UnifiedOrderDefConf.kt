@@ -70,27 +70,6 @@ object UnifiedOrderDefConf{
      */
     var spbillCreateIp: String=""
     /**
-     * 交易起始时间 String(14)
-     * 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见
-     * 时间规则
-     * 标准北京时间，时区为东八区，自1970年1月1日 0点0分0秒以来的秒数。注意：部分系统取到的值为毫秒级，需要转换成秒(10位数字)
-     */
-    var timeStart: String?= null
-    /**
-     * 交易结束时间 String(14)
-     * 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。
-     * 订单失效时间是针对订单号而言的，由于在请求支付的时候有一个必传参数prepay_id只有两小时的有效期，
-     * 所以在重入时间超过2小时的时候需要重新请求下单接口获取新的prepay_id。其他详见时间规则
-     * 建议：最短失效时间间隔大于1分钟
-     */
-    var timeExpire: String?= null
-    /**
-     * 订单优惠标记 String(32)
-     * 订单优惠标记，使用代金券或立减优惠功能时需要的参数，说明详见
-     * 代金券或立减优惠 https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1
-     */
-    var goodsTag: String?= null
-    /**
      * 通知地址 String(256)
      * 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
      */

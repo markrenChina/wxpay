@@ -10,6 +10,10 @@ import javax.xml.bind.annotation.XmlAccessorType
 import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlRootElement
 
+/**
+ * 统一下单bean
+ * @author markrenChina
+ */
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UnifiedOrder{
@@ -120,7 +124,7 @@ public class UnifiedOrder{
      */
     @Size(max = 14,message = "timeStart must be at most 14 characters long")
     @XmlElement(name = "time_start")
-    public var timeStart: String?= UnifiedOrderDefConf.timeStart
+    public var timeStart: String?= null
     /**
      * 交易结束时间 String(14)
      * 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。
@@ -130,7 +134,7 @@ public class UnifiedOrder{
      */
     @Size(max = 14,message = "timeExpire must be at most 14 characters long")
     @XmlElement(name = "time_expire")
-    public var timeExpire: String?= UnifiedOrderDefConf.timeExpire
+    public var timeExpire: String?= null
     /**
      * 订单优惠标记 String(32)
      * 订单优惠标记，使用代金券或立减优惠功能时需要的参数，说明详见
@@ -138,7 +142,7 @@ public class UnifiedOrder{
      */
     @Size(max = 32,message = "goodsTag must be at most 32 characters long")
     @XmlElement(name = "goods_tag")
-    public var goodsTag: String?= UnifiedOrderDefConf.goodsTag
+    public var goodsTag: String?= null
     /**
      * 通知地址 String(256)
      * 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。

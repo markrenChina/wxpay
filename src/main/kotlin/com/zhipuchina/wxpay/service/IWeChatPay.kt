@@ -1,6 +1,6 @@
 package com.zhipuchina.wxpay.service
 
-import com.zhipuchina.wxpay.repository.network.model.bsresponse.UnifiedOrderBsResponse
+import com.zhipuchina.wxpay.repository.network.model.bsrequest.UnifiedOrderBsResponse
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 
 /**
