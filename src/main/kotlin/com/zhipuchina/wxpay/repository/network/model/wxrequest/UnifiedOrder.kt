@@ -23,6 +23,7 @@ public class UnifiedOrder{
      */
     @Size(max = 32,message = "appid must be at most 32 characters long")
     public var appid: String = UnifiedOrderDefConf.appid
+    set(value){ field =value.trim{it < ' '} }
     /**
      * 商户号 String(32)
      * 微信支付分配的商户号
@@ -30,6 +31,7 @@ public class UnifiedOrder{
     @XmlElement(name = "mch_id")
     @Size(max = 32,message = "mchId must be at most 32 characters long")
     public var mchId: String = UnifiedOrderDefConf.mchId
+        set(value){ field =value.trim{it < ' '} }
     /**
      * 设备号 String(32)
      * 自定义参数，可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"

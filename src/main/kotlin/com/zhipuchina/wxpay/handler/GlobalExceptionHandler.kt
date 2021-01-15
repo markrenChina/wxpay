@@ -2,11 +2,13 @@ package com.zhipuchina.wxpay.handler
 
 import com.zhipuchina.wxpay.repository.network.model.ResultVo
 import org.slf4j.LoggerFactory
+import org.springframework.core.codec.DecodingException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.support.WebExchangeBindException
+import org.springframework.web.server.ServerWebInputException
 
 
 /**
@@ -25,6 +27,13 @@ class GlobalExceptionHandler {
         return e.bindingResult.fieldError?.defaultMessage?.let { ResultVo(null,400, it ) }
             ?: ResultVo(null,400,e.localizedMessage)
 
+    }
+
+    @ExceptionHandler(ServerWebInputException::class)
+    suspend fun handleDecodingException(e: DecodingException): ResultVo<String>?{
+        logger.error("json解析异常:",e.localizedMessage)
+        return e.message?.let { ResultVo(null,400, it) }
+            ?: ResultVo(null,400,e.localizedMessage)
     }
 
     @ExceptionHandler(Exception::class)

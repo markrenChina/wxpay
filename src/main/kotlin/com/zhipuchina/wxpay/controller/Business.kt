@@ -13,6 +13,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -34,7 +35,7 @@ class Business constructor(
      * @doc https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1
      */
     @PostMapping("unifiedorder")
-    suspend fun unifiedOrder(@RequestBody unifiedOrder: UnifiedOrder):ResultVo<UnifiedOrderBsResponse> = coroutineScope{
+    suspend fun unifiedOrder(@RequestBody @Validated unifiedOrder: UnifiedOrder):ResultVo<UnifiedOrderBsResponse> = coroutineScope{
         ResultVo(weChatPayService.unifiedOrder(unifiedOrder))
     }
 
