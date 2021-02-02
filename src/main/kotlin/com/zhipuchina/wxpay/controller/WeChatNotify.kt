@@ -1,5 +1,6 @@
 package com.zhipuchina.wxpay.controller
 
+import com.zhipuchina.wxpay.config.UnifiedOrderDefConf
 import com.zhipuchina.wxpay.repository.network.model.TestModel
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_XML_VALUE
@@ -31,7 +32,7 @@ class WeChatNotify {
 
 
     @GetMapping("test")
-    fun test()="test"
+    fun test()= UnifiedOrderDefConf.attach+ " test"
 
     /**
      * 退款结果通知

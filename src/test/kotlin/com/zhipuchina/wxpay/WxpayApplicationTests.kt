@@ -4,6 +4,7 @@ import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.utils.SignUtils
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import reactor.kotlin.core.publisher.toFlux
 import java.util.*
 import javax.xml.bind.annotation.XmlElement
 
@@ -12,6 +13,8 @@ class WxpayApplicationTests {
 
 	@Test
 	fun contextLoads() {
+		val a = arrayOf(1,2,3)
+		a.toFlux()
 	}
 
 	@Test

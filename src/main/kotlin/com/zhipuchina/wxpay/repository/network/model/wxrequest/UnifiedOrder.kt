@@ -2,6 +2,7 @@ package com.zhipuchina.wxpay.repository.network.model.wxrequest
 
 import com.zhipuchina.wxpay.config.UnifiedOrderDefConf
 import java.util.*
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
@@ -108,6 +109,7 @@ public class UnifiedOrder{
      * 外币交易的支付金额精确到币种的最小单位，参数值不能带小数点。
      */
     @NotNull(message = "total can not null")
+    @Min(0)
     @XmlElement(name = "total_fee")
     public var totalFee: Int = UnifiedOrderDefConf.totalFee
     /**

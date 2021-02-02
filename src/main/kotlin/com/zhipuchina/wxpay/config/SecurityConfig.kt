@@ -10,10 +10,12 @@ import org.springframework.security.config.web.server.ServerHttpSecurity
 class SecurityConfig{
 
 
+    //.authenticated()
     @Bean
     fun securityWebFilterChain(http: ServerHttpSecurity)
-    = http.authorizeExchange()
-        .pathMatchers("/unifiedorder").hasAuthority("USER")
+    = http
+        .authorizeExchange()
+        //.pathMatchers("/").hasAuthority("USER")
         .anyExchange().permitAll()
-        .and().build()
+        .and().csrf().disable().build()
 }

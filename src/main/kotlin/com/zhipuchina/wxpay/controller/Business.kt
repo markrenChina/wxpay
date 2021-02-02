@@ -8,12 +8,14 @@ import com.zhipuchina.wxpay.service.IWeChatPay
 import kotlinx.coroutines.coroutineScope
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -34,7 +36,7 @@ class Business constructor(
      * （业务端生成支付参数并前面返回前端）
      * @doc https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1
      */
-    @PostMapping("unifiedorder")
+    @PostMapping("unifiedorder",produces = [MediaType.APPLICATION_JSON_VALUE])
     suspend fun unifiedOrder(@RequestBody @Validated unifiedOrder: UnifiedOrder):ResultVo<UnifiedOrderBsResponse> = coroutineScope{
         ResultVo(weChatPayService.unifiedOrder(unifiedOrder))
     }

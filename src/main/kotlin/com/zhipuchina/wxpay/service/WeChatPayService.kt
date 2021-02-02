@@ -9,6 +9,9 @@ import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxRe
 import com.zhipuchina.wxpay.repository.network.model.wxresponse.UnifiedOrderWxResponse
 import com.zhipuchina.wxpay.utils.SignUtils.encodeHMACSHA256
 import com.zhipuchina.wxpay.utils.SignUtils.encodeMD5
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -25,9 +28,15 @@ class WeChatPayService constructor(
     /**
      * 验证必填的业务字段
      */
-    override suspend fun unifiedOrder(src: UnifiedOrder): UnifiedOrderBsResponse {
+    override suspend fun unifiedOrder(src: UnifiedOrder): UnifiedOrderBsResponse = coroutineScope{
         val unifiedOrder = UnifiedOrder()
         val sortedMap: SortedMap<String,String> = TreeMap()
+        /**
+         * 生成request对象
+         * scene_info 怎么签名文档并没说明
+         * https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
+         * 猜测是key={}
+         */
         /**
          * 生成request对象
          * scene_info 怎么签名文档并没说明
@@ -37,6 +46,10 @@ class WeChatPayService constructor(
         UnifiedOrder::class.java.declaredFields.forEach { field ->
             field.isAccessible = true
             //todo request对象合法性验证（可以使用自定义注解）
+            /**
+             * 时间格式和值验证，ip地址格式验证，分账和发票值验证，商户订单号合法性,sign值去除
+             * src 传入的notifyUrl 为业务回调uri 需要保存修为
+             */
             /**
              * 时间格式和值验证，ip地址格式验证，分账和发票值验证，商户订单号合法性,sign值去除
              * src 传入的notifyUrl 为业务回调uri 需要保存修为
@@ -60,6 +73,10 @@ class WeChatPayService constructor(
          * trade_type=NATIVE product_id不能为空
          * trade_type=JSAPI openid不能为空
          */
+        /**
+         * trade_type=NATIVE product_id不能为空
+         * trade_type=JSAPI openid不能为空
+         */
         log.debug(sortedMap.toString())
         val data = getSignData(sortedMap)
         log.debug(data)
@@ -69,7 +86,7 @@ class WeChatPayService constructor(
             unifiedOrder.sign = encodeMD5(data)
         }
         log.debug(unifiedOrder.sign)
-        val res = repository.unifiedOrder(unifiedOrder)
+        val res = withContext(Dispatchers.IO) { repository.unifiedOrder(unifiedOrder) }
 
         if (res.returnCode == "SUCCESS" && res.resultCode == "SUCCESS"){
             if (res.appid != unifiedOrder.appid||res.mchId != unifiedOrder.mchId){
@@ -134,7 +151,7 @@ class WeChatPayService constructor(
         //println(SignUtils.encodeHMACSHA256(data,UnifiedOrderDefConf.apiKey))
         //println(SignUtils.encodeMD5(data))
 
-        return UnifiedOrderBsResponse(unifiedOrder.appid,res.prepayId!!,unifiedOrder.signType!!)
+        UnifiedOrderBsResponse(unifiedOrder.appid,res.prepayId!!,unifiedOrder.signType!!)
     }
 
     fun getSignData(map : Map<String,String>): String{
