@@ -6,6 +6,8 @@ import com.zhipuchina.wxpay.repository.network.model.bsrequest.UnifiedOrderBsRes
 import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.service.IWeChatPay
 import kotlinx.coroutines.coroutineScope
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import kotlin.math.log
 
 /**
  * 业务接口 只对应各个业务服务端 由业务服务端发起
@@ -30,6 +34,7 @@ class Business constructor(
     @Autowired val weChatPayService: IWeChatPay
 ) {
 
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     /**
      * 统一下单
      * 调用wechat http api 生成预付单 返回信息给业务端
@@ -44,10 +49,10 @@ class Business constructor(
     /*
      * webClient
      */
-    @MessageMapping("wc-unifiedorder")
-    suspend fun wcUnifiedOrder(unifiedOrder: UnifiedOrder) = coroutineScope {
-        Flux.just(ResultVo(weChatPayService.unifiedOrder(unifiedOrder)))
-    }
+    @PostMapping("unifiedorder2")
+    fun wcUnifiedOrder(@RequestBody @Validated unifiedOrder: Mono<UnifiedOrder>): Mono<UnifiedOrderBsResponse> = weChatPayService.unifiedOrder2(unifiedOrder)
+
+
 
     @PreAuthorize("hasRole('user')")
     @MessageMapping("rs-unifiedorder")

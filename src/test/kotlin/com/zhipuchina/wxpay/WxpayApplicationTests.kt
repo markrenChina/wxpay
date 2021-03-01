@@ -4,6 +4,7 @@ import com.zhipuchina.wxpay.repository.network.model.wxrequest.UnifiedOrder
 import com.zhipuchina.wxpay.utils.SignUtils
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toFlux
 import java.util.*
 import javax.xml.bind.annotation.XmlElement
@@ -52,5 +53,17 @@ class WxpayApplicationTests {
 			println(field.getAnnotation(XmlElement::class.java)?.name ?: field.name )
 		}
 		println(sortedMap)
+	}
+
+	@Test
+	fun mergeAndCoCat(){
+		val unifiedOrder1 = UnifiedOrder()
+		unifiedOrder1.detail = "detail"
+		val unifiedOrder2 = UnifiedOrder()
+		unifiedOrder2.attach = "attach"
+		Mono.just(unifiedOrder1).concatWith(Mono.just(unifiedOrder2)).map {
+			println("**********************")
+			println(it)
+		}.subscribe()
 	}
 }

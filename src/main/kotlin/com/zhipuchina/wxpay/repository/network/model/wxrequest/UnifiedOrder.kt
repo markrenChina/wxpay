@@ -44,6 +44,7 @@ public class UnifiedOrder{
      * 随机字符串，String(32)
      * 推荐随机数生成算法 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
      */
+    //todo UUID随机算法即使在响应式代码中，因为引用外部随机的熵源，所以是一个串行化的节点。
     @XmlElement(name = "nonce_str")
     @Size(max = 32,message = "nonceStr must be at most 32 characters long")
     public var nonceStr: String = UUID.randomUUID().toString().replace("-","").toUpperCase()
