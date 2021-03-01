@@ -7,8 +7,7 @@ import com.zhipuchina.wxpay.webClientRest.interfaces.RestHandler
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
-import org.springframework.http.MediaType.APPLICATION_XML
-import org.springframework.http.MediaType.APPLICATION_XML_VALUE
+import org.springframework.http.MediaType.*
 import org.springframework.http.codec.ClientCodecConfigurer
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
@@ -65,7 +64,7 @@ class WebClientRestHandler(override val serverInfo: ServerInfo) : RestHandler {
         }
 
         //构建交换策略
-        if (APPLICATION_XML == sendContentType[0]){
+        if (APPLICATION_XML == sendContentType[0] || TEXT_XML == sendContentType[0]){
             val strategies = ExchangeStrategies.builder()
                 .codecs { configure ->
                     configure.defaultCodecs().jaxb2Decoder(Jaxb2XmlDecoder())
@@ -85,7 +84,7 @@ class WebClientRestHandler(override val serverInfo: ServerInfo) : RestHandler {
         val request = client
             .method(methodInfo.method)
             .uri(uri)
-            //.contentType(sendContentType[0])
+            .contentType(sendContentType[0])
             .accept(*backContentType)
         //发出请求
         val retrieve = methodInfo.body?.let {

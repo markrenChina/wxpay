@@ -17,6 +17,6 @@ interface IServerApi {
      * consumes = [TEXT_PLAIN_VALUE] 表示服务端返回 默认json
      * produces = [APPLICATION_JSON_VALUE] 表示发出的格式 默认json
      */
-    @PostMapping("/unifiedorder", consumes = [APPLICATION_XML_VALUE], produces = [APPLICATION_XML_VALUE])
+    @PostMapping("/unifiedorder", consumes = [TEXT_XML_VALUE], produces = [TEXT_XML_VALUE])
     fun unifiedOrder(@RequestBody unifiedOrder: Mono<UnifiedOrder>): Mono<UnifiedOrderWxResponse>
 }
