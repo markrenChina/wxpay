@@ -50,7 +50,7 @@ class Business constructor(
      * webClient
      */
     @PostMapping("unifiedorder2")
-    fun wcUnifiedOrder(@RequestBody @Validated unifiedOrder: Mono<UnifiedOrder>): Mono<UnifiedOrderBsResponse> = weChatPayService.unifiedOrder2(unifiedOrder)
+    fun wcUnifiedOrder(@RequestBody @Validated unifiedOrder: Mono<UnifiedOrder>) = weChatPayService.unifiedOrder2(unifiedOrder).map { ResultVo(it) }
 
 
 

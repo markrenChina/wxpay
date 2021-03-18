@@ -1,5 +1,5 @@
 微信支付中间层，业务端调business api发起微信支付，
-# 正在开发中 (统一下单api已用postman测试通过)
+# (统一下单api已用postman测试通过)
 ###需要自己创建 resources/application.properties 并配置
 配置示例：
 ```properties
@@ -20,4 +20,4 @@ spring.rsocket.server.port=8081
 
 ```
 
-###进行中：（业务后端，和vue.js的管理端，小程序端基本完成，都是公司产品不开源的，耐心等待一下）
+### 项目升级成cloud，并且对接微信v3 API，此项目停止更新

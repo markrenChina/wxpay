@@ -39,7 +39,7 @@ class WebClientRestHandler(override val serverInfo: ServerInfo) : RestHandler {
         val backContentType: Array<MediaType> = if (methodInfo.returnContextType.isEmpty()){
             arrayOf(MediaType.APPLICATION_JSON)
         }else{
-            val array:Array<MediaType> = Array(methodInfo.returnContextType.size) { MediaType.APPLICATION_JSON }
+            val array:Array<MediaType> = Array(methodInfo.returnContextType.size) { APPLICATION_JSON }
             for (index in  methodInfo.returnContextType.indices){
                 array[index] = MediaType(
                     methodInfo.returnContextType[index].split("/")[0],
@@ -71,7 +71,6 @@ class WebClientRestHandler(override val serverInfo: ServerInfo) : RestHandler {
                     configure.defaultCodecs().jaxb2Encoder(Jaxb2XmlEncoder())
                 }
                 .build()
-            log.debug("xml 请求")
             client = client.mutate().exchangeStrategies(strategies).build()
         }
 

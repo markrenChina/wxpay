@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_XML_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -23,6 +24,11 @@ class WeChatNotify {
      * consumes 消费xml
      * produces 返回xml
      */
+    @PostMapping(value = ["wxpay1"])
+    fun wxpay1() {
+
+    }
+
     @GetMapping(value = ["demo"],consumes = [APPLICATION_XML_VALUE],produces = [APPLICATION_XML_VALUE])
     fun demo(@RequestBody testModel: TestModel): ResponseEntity<TestModel> {
         println("成功")
